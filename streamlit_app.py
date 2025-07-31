@@ -1,24 +1,24 @@
 # build a streamlit app to predict the price of a property in Paris based on the top 5 features from the linear regression model
 import streamlit as st
 import joblib
-import numpy as np
+import pandas as pd
 
-# Load the model and scaler
-model_top5 = joblib.load('linear_model_top5.pkl')
-scaler_top5 = joblib.load('scaler_top5.pkl')
+# Load the pipeline model
+pipeline_model = joblib.load('paris_real_estate_pipeline_top5.pkl')
 
 # Function to predict the price of a property
 def predict_price_top5(square_meters, floors, has_yard, has_pool, city_part_range):
-    # Prepare the input data
-    input_data = np.array([[square_meters, floors, has_yard, has_pool, city_part_range]])
+    # Create input DataFrame with the required features
+    input_data = pd.DataFrame({
+        'squareMeters': [square_meters],
+        'floors': [floors],
+        'hasYard': [has_yard],
+        'hasPool': [has_pool],
+        'cityPartRange_10': [1 if city_part_range == 10 else 0]
+    })
     
-    # Scale only square_meters and floors (first two features)
-    input_data_copy = input_data.copy()
-    input_data_copy[:, 0:2] = scaler_top5.transform(input_data[:, 0:2].reshape(1, -1))
-    input_data_scaled = input_data_copy
-    
-    # Predict the price
-    predicted_price = model_top5.predict(input_data_scaled)
+    # Predict using the pipeline (handles preprocessing automatically)
+    predicted_price = pipeline_model.predict(input_data)
     
     return predicted_price[0]
 

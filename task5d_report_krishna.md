@@ -9,6 +9,33 @@
 
 ## Table of Contents
 
+1. [Introduction](#introduction)
+2. [Dataset Description](#dataset-description)
+3. [Dataset Exploration](#dataset-exploration)
+    - [Initial Inspection](#initial-inspection)
+    - [Check for Missing Values](#check-for-missing-values)
+    - [Univariate Analysis](#univariate-analysis)
+    - [Nature of Categorical Features](#nature-of-categorical-features)
+    - [Price Analysis over years](#price-analysis-over-years)
+4. [Data Preprocessing](#data-preprocessing)
+    - [Correlation Analysis (Multi-Variate Analysis)](#correlation-analysis-multi-variate-analysis)
+    - [One-Hot Encoding of Categorical Features](#one-hot-encoding-of-categorical-features)
+    - [Train-Test Split](#train-test-split)
+5. [Regression Modeling with Cross-Validation](#regression-modeling-with-cross-validation)
+    - [Choice of Models and Evaluation Metrics](#choice-of-models-and-evaluation-metrics)
+    - [Model Training and Evaluation](#model-training-and-evaluation)
+        - [Linear Regression](#linear-regression)
+        - [Random Forest Regressor](#random-forest-regressor)
+        - [Gradient Boosting Regressor](#gradient-boosting-regressor)
+    - [Comparison of Models](#comparison-of-models)
+6. [Feature Importance Analysis](#feature-importance-analysis)
+    - [Using Model Parameters](#using-model-parameters)
+    - [Using Permutation Importance](#using-permutation-importance)
+    - [Using SHAP Values](#using-shap-values)
+7. [Model Deployment using Streamlit](#model-deployment-using-streamlit)
+8. [Conclusion](#conclusion)
+9. [References](#references)
+
 ## Introduction
 
 The goal of this project is to predict housing prices in Paris using regression techniques. We will explore various features of the dataset, preprocess the data, try different regression models, and evaluate their performance. The final model will be deployed using a Streamlit application for user interaction.
@@ -568,7 +595,7 @@ Let us use three key methods to analyze feature importance:
 2. Using permutation importance from `sklearn.inspection`
 3. Using SHAP (SHapley Additive exPlanations) values
 
-### Using Model Parameters (Basic Method)
+### Using Model Parameters
 
 Each model has its own way of determining feature importance. For Linear Regression, the coefficients can be used to determine the importance of each feature. For Random Forest and Gradient Boosting, the feature importances can be used.
 
@@ -775,7 +802,7 @@ Putting all the results together, it appears that the size of the property in sq
 
 The location of the property, represented by `cityPartRange`, also plays a significant role in determining the price, but it is not as significant as the size and features of the property itself.
 
-### Feature Importance using SHAP Values
+### Using SHAP Values
 
 SHAP (SHapley Additive exPlanations) values provide a unified measure of feature importance that accounts for feature interactions and is model-agnostic. SHAP values are based on cooperative game theory and provide a way to explain the output of any machine learning model.
 
@@ -980,7 +1007,7 @@ Since we are using the Linear Regression Model, we can also easily interpret the
 
 The model pipeline object is now saved to a file using `joblib` for future use in the Streamlit application.
 
-## Streamlit Application
+## Model Deployment using Streamlit
 
 A streamlit application is created to allow users to interact with the model and make predictions based on user inputs. The application provides a user-friendly interface where users can input the features of a property and get the predicted price.
 
@@ -1036,8 +1063,6 @@ We found that the Linear Regression model performed the best, achieving a near-p
 We also performed feature importance analysis using model parameters, permutation importance, and SHAP values. The analysis revealed that the `squareMeters` feature is the most important feature for predicting the target variable `price`, followed by `floors`, `hasYard`, and `hasPool`.
 
 Finally, we created a Streamlit application to allow users to interact with the model and make predictions based on user inputs. The application provides a user-friendly interface where users can input the features of a property and get the predicted price.
-
-## References
 
 ## References
 
